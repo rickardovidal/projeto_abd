@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Consulta de Condições Médicas{% endblock %}
+
+{% block content %}
+  {% if messages %}
+      {% for message in messages %}
+          {% if message.tags == 'error' %}
+              <div class="alert alert-danger border-danger border-3 shadow" role="alert" style="background-color: #f8d7da; font-weight: bold; font-size: 1.1rem; text-align: center; padding: 20px;">
+                  ATENÇÃO: {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+          {% else %}
+              <div class="alert alert-success border-success border-3 shadow" role="alert" style="font-weight: bold; text-align: center; padding: 15px;">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+          {% endif %}
+      {% endfor %}
+  {% endif %}
+<div class="container mt-4">
+  <h2>Consulta de Condições Médicas</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Observações</th>
+        <th>Estado</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for id_condicoes_medicas, nome, observacoes, estado in linhas %}
+      <tr>
+        <td>{{ id_condicoes_medicas }}</td>
+        <td>{{ nome }}</td>
+        <td>{{ observacoes }}</td>
+        <td>{{ estado }}</td>
+        <td>
+          <a href="{% url 'altera_condicao_medica' %}"
+             class="btn btn-sm btn-primary">
+            Editar
+          </a>
+          <a href="{% url 'apaga_condicoes_medicas' id_condicoes_medicas %}"
+             class="btn btn-sm btn-danger">
+            Apagar
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Sem registos.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

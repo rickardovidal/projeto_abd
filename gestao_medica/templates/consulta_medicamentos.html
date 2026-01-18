@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Consulta de Medicamentos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Consulta de Medicamentos</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Observações</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for id_medicamento, nome, observacoes  in linhas %}
+      <tr>
+        <td>{{ id_medicamento }}</td>
+        <td>{{ nome }}</td>
+        <td>{{ observacoes }}</td>
+        <td>
+          <a href="{% url 'altera_medicamento' %}"
+             class="btn btn-sm btn-primary">
+            Editar
+          </a>
+          <a href="{% url 'apaga_medicamento' id_medicamento %}"
+             class="btn btn-sm btn-danger">
+            Apagar
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">Sem registos.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

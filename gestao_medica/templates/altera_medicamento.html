@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Alterar Medicamento{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Alterar Medicamento</h2>
+
+  <form method="post" id="formAlterarMedicamento" class="row g-3">
+    {% csrf_token %}
+
+    <div class="col-12 col-md-4">
+      <label for="lvMedicamentos" class="form-label">Selecionar medicamento</label>
+      <select id="lvMedicamentos" name="id_medicamento" size="8" class="form-select">
+        {% for m in lista_medicamentos %}
+        <option
+          value="{{ m.id_medicamento }}"
+          data-nome="{{ m.nome }}"
+          data-observacoes="{{ m.observacoes }}"
+        >
+          {{ m.id_medicamento }} - {{ m.nome }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-12 col-md-8">
+      <h3 class="h5">Dados do Medicamento</h3>
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="txtNome" class="form-label">Nome</label>
+          <input type="text" id="txtNome" name="nome" class="form-control">
+        </div>
+        <div class="col-12">
+          <label for="txtObservacoes" class="form-label">Observações</label>
+          <input type="text" id="txtObservacoes" name="observacoes" class="form-control">
+        </div>
+        <div class="col-12">
+          <button type="submit" id="btnAlterar" class="btn btn-primary">
+            Alterar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const lv = document.getElementById("lvMedicamentos");
+  const txtNome = document.getElementById("txtNome");
+  const txtObservacoes = document.getElementById("txtObservacoes");
+
+  function preencherCampos() {
+    if (!lv.value) return;
+    let sel = lv.options[lv.selectedIndex];
+    txtNome.value = sel.getAttribute("data-nome");
+    txtObservacoes.value = sel.getAttribute("data-observacoes");
+  }
+
+  lv.addEventListener("change", preencherCampos);
+
+  if (lv.options.length > 0) {
+    lv.selectedIndex = 0;
+    preencherCampos();
+  }
+});
+</script>
+{% endblock %}

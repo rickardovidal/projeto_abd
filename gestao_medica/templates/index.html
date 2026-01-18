@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Gestão Médica</h2>
+  <p><a href="{% url 'inser_medicamento' %}">Inserir medicamento</a></p>
+  <p><a href="{% url 'inser_condicao_medica' %}">Inserir condição médica</a></p>
+  <p><a href="{% url 'consulta_medicamentos' %}">Consultar medicamentos</a></p>
+  <p><a href="{% url 'consulta_condicoes_medicas' %}">Consultar condições médicas</a></p>
+  <p><a href="{% url 'altera_medicamento' %}">Alterar medicamento</a></p>
+  <p><a href="{% url 'altera_condicao_medica' %}">Alterar condição médica</a></p>
+
+
+</div>
+{% endblock %}
+

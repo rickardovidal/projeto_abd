@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Inserir Medicamento{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Inserir Medicamento</h2>
+
+    {% if msg %}
+        <div class="alert alert-success">{{ msg }}</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.nome.label_tag }}
+            {{ form.nome }}
+        </div>
+        <div class="mb-3">
+            {{ form.observacoes.label_tag }}
+            {{ form.observacoes }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+{% endblock %}

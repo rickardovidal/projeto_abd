@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Alterar Condição Médica{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Alterar Condição Médica</h2>
+
+  <form method="post" id="formAlterarCondicao" class="row g-3">
+    {% csrf_token %}
+
+    <div class="col-12 col-md-4">
+      <label for="lvCondicoes" class="form-label">Selecionar condição médica</label>
+      <select id="lvCondicoes" name="id_condicoes_medicas" size="8" class="form-select">
+        {% for c in lista_condicoes %}
+        <option
+          value="{{ c.id_condicoes_medicas }}"
+          data-nome="{{ c.nome }}"
+          data-observacoes="{{ c.observacoes }}"
+          data-estado="{{ c.estado|yesno:'true,false' }}"
+        >
+          {{ c.id_condicoes_medicas }} - {{ c.nome }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-12 col-md-8">
+      <h3 class="h5">Dados da Condição Médica</h3>
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="txtNome" class="form-label">Nome</label>
+          <input type="text" id="txtNome" name="nome" class="form-control">
+        </div>
+        <div class="col-12">
+          <label for="txtObservacoes" class="form-label">Observações</label>
+          <input type="text" id="txtObservacoes" name="observacoes" class="form-control">
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input type="checkbox" id="chkEstado" name="estado" class="form-check-input">
+            <label for="chkEstado" class="form-check-label">Estado</label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" id="btnAlterarCondicao" class="btn btn-primary">
+            Alterar condição médica
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const lv = document.getElementById("lvCondicoes");
+  const txtNome = document.getElementById("txtNome");
+  const txtObservacoes = document.getElementById("txtObservacoes");
+  const chkEstado = document.getElementById("chkEstado");
+
+  function preencherCamposCondicao() {
+    if (!lv.value) return;
+    let sel = lv.options[lv.selectedIndex];
+    txtNome.value = sel.getAttribute("data-nome");
+    txtObservacoes.value = sel.getAttribute("data-observacoes");
+    chkEstado.checked = sel.getAttribute("data-estado") === "true";
+  }
+
+  lv.addEventListener("change", preencherCamposCondicao);
+
+  if (lv.options.length > 0) {
+    lv.selectedIndex = 0;
+    preencherCamposCondicao();
+  }
+});
+</script>
+{% endblock %}
